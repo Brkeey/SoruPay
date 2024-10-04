@@ -5,14 +5,29 @@
 //  Created by Berke  on 3.10.2024.
 //
 
+
+// MainView.swift
+
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var session: SessionStore
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.circle")
+                    Text("Profil")
+                }
+        }
     }
 }
 
-#Preview {
-    MainView()
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainView().environmentObject(SessionStore())
+    }
 }
+
