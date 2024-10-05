@@ -15,6 +15,29 @@ struct MainView: View {
 
     var body: some View {
         TabView {
+            SoruListView()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("Sorular")
+                }
+
+            UploadView()
+                .tabItem {
+                    Image(systemName: "plus.circle")
+                    Text("Soru Paylaş")
+                }
+
+            LibraryView()
+                .tabItem {
+                    Image(systemName: "book")
+                    Text("Kütüphanem")
+                }
+
+            TopSorularView()
+                .tabItem {
+                    Image(systemName: "star.fill")
+                    Text("Günlük Top 5")
+                }
 
             ProfileView()
                 .tabItem {
@@ -30,4 +53,3 @@ struct MainView_Previews: PreviewProvider {
         MainView().environmentObject(SessionStore())
     }
 }
-
