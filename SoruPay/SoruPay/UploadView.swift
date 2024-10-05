@@ -10,6 +10,7 @@
 import SwiftUI
 import FirebaseStorage
 import FirebaseFirestore
+import FirebaseAuth
 
 struct UploadView: View {
     @State private var showImagePicker = false
