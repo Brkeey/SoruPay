@@ -46,7 +46,7 @@ struct UploadView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.orange)
                         .cornerRadius(8)
                 }
 
@@ -87,6 +87,7 @@ struct UploadView: View {
                 ImagePicker(image: $image)
             }
         }
+        
     }
 
     func uploadImage(image: UIImage) {
