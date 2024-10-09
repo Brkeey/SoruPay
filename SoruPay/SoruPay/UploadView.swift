@@ -21,73 +21,98 @@ struct UploadView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                if let image = image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 200)
-                        .cornerRadius(10)
-                } else {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 200)
-                        .overlay(
-                            Text("Fotoğraf Seç")
-                                .foregroundColor(.white)
-                        )
-                        .cornerRadius(10)
-                }
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all) // Arka planı sade beyaz yapıyoruz
 
-                Button(action: {
-                    showImagePicker = true
-                }) {
-                    Text("Fotoğraf Seç")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.orange)
-                        .cornerRadius(8)
-                }
-
-                Picker("Ders", selection: $selectedDers) {
-                    ForEach(dersler, id: \.self) { ders in
-                        Text(ders)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-
-                if !errorMessage.isEmpty {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                }
-
-                Button(action: {
-                    if let image = image {
-                        uploadImage(image: image)
-                    } else {
-                        errorMessage = "Lütfen bir fotoğraf seçin."
-                    }
-                }) {
+                VStack(spacing: 25) {
                     Text("Soru Paylaş")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .cornerRadius(8)
-                }
-                .padding(.top, 10)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                        .padding(.top, 20)
+                    
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 250)
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+                    } else {
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.gray.opacity(0.1))
+                            .frame(height: 250)
+                            .overlay(
+                                VStack {
+                                    Image(systemName: "photo.on.rectangle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 60)
+                                        .foregroundColor(.gray)
 
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitle("Soru Paylaş", displayMode: .inline)
-            .sheet(isPresented: $showImagePicker) {
-                ImagePicker(image: $image)
+                                    Text("Fotoğraf Seç")
+                                        .font(.headline)
+                                        .foregroundColor(.gray)
+                                }
+                            )
+                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+                    }
+
+                    Button(action: {
+                        showImagePicker = true
+                    }) {
+                        Text("Fotoğraf Seç")
+                            .font(.system(size: 18, weight: .semibold))
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .background(Color.blue.opacity(0.9))
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.blue.opacity(0.3), radius: 10, x: 0, y: 5)
+                    }
+
+                    Picker("Ders Seçin", selection: $selectedDers) {
+                        ForEach(dersler, id: \.self) { ders in
+                            Text(ders)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+
+                    if !errorMessage.isEmpty {
+                        Text(errorMessage)
+                            .font(.subheadline)
+                            .foregroundColor(.red)
+                            .padding(.top, 5)
+                    }
+
+                    Button(action: {
+                        if let image = image {
+                            uploadImage(image: image)
+                        } else {
+                            errorMessage = "Lütfen bir fotoğraf seçin."
+                        }
+                    }) {
+                        Text("Soru Paylaş")
+                            .font(.system(size: 18, weight: .semibold))
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .background(Color.green.opacity(0.9))
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.green.opacity(0.3), radius: 10, x: 0, y: 5)
+                    }
+                    .padding(.top, 20)
+
+                    Spacer()
+                }
+                .padding()
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showImagePicker) {
+                    ImagePicker(image: $image)
+                }
             }
         }
-        
     }
 
     func uploadImage(image: UIImage) {
@@ -136,7 +161,6 @@ struct UploadView: View {
             if let error = error {
                 errorMessage = "Veritabanına kaydetme hatası: \(error.localizedDescription)"
             } else {
-                // Başarılı kaydetme sonrası yapılacaklar
                 image = nil
                 errorMessage = "Soru başarıyla yüklendi."
             }
