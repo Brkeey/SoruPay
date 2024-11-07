@@ -8,6 +8,9 @@
 // ImagePicker.swift
 
 import SwiftUI
+import Firebase
+import FirebaseStorage
+
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
@@ -53,3 +56,6 @@ struct ImagePicker_Previews: PreviewProvider {
         ImagePicker(image: .constant(nil))
     }
 }
+
+
+

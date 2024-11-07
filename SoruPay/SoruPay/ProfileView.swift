@@ -47,3 +47,4 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView().environmentObject(SessionStore())
     }
 }
+ /// 9 ,10 ,11 , 12 tyt ayt ekle ea say söz ekle
